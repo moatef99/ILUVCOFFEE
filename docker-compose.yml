@@ -1,0 +1,33 @@
+version: '3.9'
+services:
+  postgres:
+    container_name: iluvcoffee-postgres-container
+    image: 'postgres:12.7'
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: magical_password
+
+  dev:
+    depends_on:
+      - postgres
+    container_name: iLuvCoffeeApp
+    image: iluvcoffee:1.0.0
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:debug
+    ports:
+      - 3001:3000
+    volumes:
+      - .:/usr/src/app
+    restart: unless-stopped
+    env_file:
+      - nodeServerBackend.env
+
+volumes:
+  postgres-data: # named volumes can be managed easier using docker-compose
