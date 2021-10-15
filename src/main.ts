@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { createConnection } from 'typeorm';
+import { AuthenticationGuard } from './common/guards/authentication.guard';
 
 async function bootstrap() {
   //run migration scripts
@@ -38,7 +39,6 @@ async function bootstrap() {
       transform: true
     })
   );
-
   await app.listen(3001);
 }
 bootstrap();

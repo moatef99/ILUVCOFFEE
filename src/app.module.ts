@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
+import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
 import * as joi from '@hapi/joi';
 
 @Module({
@@ -28,7 +30,9 @@ import * as joi from '@hapi/joi';
       autoLoadEntities: true,
       synchronize: process.env.IS_SYNCHRONIZE === 'true'
     }),
-    CoffeesModule
+    CoffeesModule,
+    AuthModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [AppService]
